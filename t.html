@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Mandelbrot Set</title>
+  <style>
+    /* Style the canvas element */
+    canvas {
+      border: 1px solid black;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Create a canvas element with an id of "canvas" -->
+  <canvas id="canvas" width="600" height="600"></canvas>
+  <!-- Include a script tag that contains the JavaScript code -->
+  <script>
+    // Get the canvas element and its context
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+
+    // Set the width and height of the canvas
+    var width = canvas.width;
+    var height = canvas.height;
+
+    // Set the scaling factor and the offset to map the canvas to the complex plane
+    var scale = 200;
+    var offsetX = -width / 2;
+    var offsetY = -height / 2;
+
+    // Set the maximum number of iterations and the threshold for divergence
+    var maxIterations = 100;
+    var threshold = 4;
+
+    // Define the function f(z) = z^2 + c
+    function f(z, c) {
+      return {
+        x: z.x * z.x - z.y * z.y + c.x,
+        y: 2 * z.x * z.y + c.y
+      };
+    }
+
+    // Define a function to calculate the distance from the origin
+    function distance(z) {
+      return Math.sqrt(z.x * z.x + z.y * z.y);
+    }
+
+    // Define a function to map a color to a number of iterations
+    function color(iterations) {
+      // Use a simple grayscale gradient
+      var value = iterations / maxIterations * 255;
+      return "rgb(" + value + "," + value + "," + value + ")";
+    }
+
+    // Loop through every pixel on the canvas
+    for (var x = 0; x < width; x++) {
+      for (var y = 0; y < height; y++) {
+        // Map the pixel to the complex plane
+        var c = {
+          x: (x + offsetX) / scale,
+          y: (y + offsetY) / scale
+        };
+
+        // Initialize z to 0
+        var z = {
+          x: 0,
+          y: 0
+        };
+
+        // Initialize the number of iterations to 0
+        var iterations = 0;
+
+        // Iterate the function f(z) until z diverges or reaches the maximum number of iterations
+        while (distance(z) < threshold && iterations < maxIterations) {
+          z = f(z, c);
+          iterations++;
+        }
+
+        // Set the color of the pixel according to the number of iterations
+        ctx.fillStyle = color(iterations);
+        ctx.fillRect(x, y, 1, 1);
+      }
+    }
+
+    // Define some variables to store the mouse position and the zoom level
+    var mouseX = 0;
+    var mouseY = 0;
+    var zoom = 1;
+
+    // Define a function to handle the mouse move event
+    function mouseMove(event) {
+      // Get the mouse position relative to the canvas
+      mouseX = event.clientX - canvas.offsetLeft;
+      mouseY = event.clientY - canvas.offsetTop;
+    }
+
+    // Define a function to handle the mouse click event
+    function mouseClick(event) {
+      // Check if the left mouse button is pressed
+      if (event.button == 0) {
+        // Zoom in by a factor of 2
+        zoom *= 2;
+        // Adjust the offset and the scale accordingly
+        offsetX -= (mouseX - width / 2) / scale;
+        offsetY -= (mouseY - height / 2) / scale;
+        scale *= 2;
+        // Redraw the Mandelbrot set
+        draw();
+      }
+      // Check if the right mouse button is pressed
+      if (event.button == 2) {
+        // Zoom out by a factor of 2
+        zoom /= 2;
+        // Adjust the offset and the scale accordingly
+        scale /= 2;
+        offsetX += (mouseX - width / 2) / scale;
+        offsetY += (mouseY - height / 2) / scale;
+        // Redraw the Mandelbrot set
+        draw();
+      }
+    }
+
+    // Define a function to handle the mouse wheel event
+    function mouseWheel(event) {
+      // Get the wheel delta
+      var delta = event.wheelDelta;
+      // Check if the wheel is scrolled up
+      if (delta > 0) {
+        // Zoom in by a factor of 1.1
+        zoom *= 1.1;
+        // Adjust the offset and the scale accordingly
+        offsetX -= (mouseX - width / 2) / scale * 0.1;
+        offsetY -= (mouseY - height / 2) / scale * 0.1;
+        scale *= 1.1;
+        // Redraw the Mandelbrot set
+        draw();
+      }
+      // Check if the wheel is scrolled down
+      if (delta < 0) {
+        // Zoom out by a factor of 1.1
+        zoom /= 1.1;
+        // Adjust the offset and the scale accordingly
+        scale /= 1.1;
+        offsetX += (mouseX - width / 2) / scale * 0.1;
+        offsetY += (mouseY - height / 2) / scale * 0.1;
+        // Redraw the Mandelbrot set
+        draw();
+      }
+    }
+
+    // Define a function to handle the touch start event
+    function touchStart(event) {
+      // Prevent the default behavior
+      event.preventDefault();
+      // Get the touch position relative to the canvas
+      var touch = event.touches[0];
+      mouseX = touch.clientX - canvas.offsetLeft;
+      mouseY = touch.clientY - canvas.offsetTop;
+    }
+
+    // Define a function to handle the touch move event
+    function touchMove(event) {
+      // Prevent the default behavior
+      event.preventDefault();
+      // Get the touch position relative to the canvas
+      var touch = event.touches[0];
+      mouseX = touch.clientX - canvas.offsetLeft;
+      mouseY = touch.clientY - canvas.offsetTop;
+    }
+
+    // Define a function to handle the touch end event
+    function touchEnd(event) {
+      // Prevent the default behavior
+      event.preventDefault();
+      // Zoom in by a factor of 2
+      zoom *= 2;
+      // Adjust the offset and the scale accordingly
+      offsetX -= (mouseX - width / 2) / scale;
+      offsetY -= (mouseY - height / 2) / scale;
+      scale *= 2;
+      // Redraw the Mandelbrot set
+      draw();
+    }
+
+    // Define a function to draw the Mandelbrot set
+    function draw() {
+      // Loop through every pixel on the canvas
+      for (var x = 0; x < width; x++) {
+        for (var y = 0; y < height; y++) {
+          // Map the pixel to the complex plane
+          var c = {
+            x: (x + offsetX) / scale,
+            y: (y + offsetY) / scale
+          };
+
+          // Initialize z to 0
+          var z = {
+            x: 0,
+            y: 0
+          };
+
+          // Initialize the number of iterations to 0
+          var iterations = 0;
+
+          // Iterate the function f(z) until z diverges or reaches the maximum number of iterations
+          while (distance(z) < threshold && iterations < maxIterations) {
+            z = f(z, c);
+            iterations++;
+          }
+
+          // Set the color of the pixel according to the number of iterations
+          ctx.fillStyle = color(iterations);
+          ctx.fillRect(x, y, 1, 1);
+        }
+      }
+    }
+
+    // Add event listeners for mouse and touch events
+    canvas.addEventListener("mousemove", mouseMove, false);
+    canvas.addEventListener("mousedown", mouseClick, false);
+    canvas.addEventListener("mousewheel", mouseWheel, false);
+    canvas.addEventListener("touchstart", touchStart, false);
+    canvas.addEventListener("touchmove", touchMove, false);
+    canvas.addEventListener("touchend", touchEnd, false);
+
+    // Draw the Mandelbrot set for the first time
+    draw();
+  </script>
+</body>
+</html>

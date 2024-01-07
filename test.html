@@ -1,0 +1,105 @@
+<html>
+<head>
+<script>
+// Set the canvas size and the initial zoom level
+var width = 800;
+var height = 600;
+var zoom = 200;
+
+// Get the canvas element and its context
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+
+// Create an image data object to store the pixel colors
+var imageData = ctx.createImageData(width, height);
+
+// Define the maximum number of iterations for the Mandelbrot algorithm
+var maxIterations = 100;
+
+// Define a function to map a pixel coordinate to a complex number
+function pixelToComplex(x, y) {
+  var real = (x - width / 2) / zoom;
+  var imag = (y - height / 2) / zoom;
+  return {real: real, imag: imag};
+}
+
+// Define a function to calculate the color of a pixel based on the Mandelbrot algorithm
+function mandelbrotColor(x, y) {
+  // Get the complex number corresponding to the pixel coordinate
+  var c = pixelToComplex(x, y);
+  // Initialize the iteration counter and the complex number z
+  var n = 0;
+  var z = {real: 0, imag: 0};
+  // Loop until the magnitude of z exceeds 2 or the maximum number of iterations is reached
+  while (z.real * z.real + z.imag * z.imag < 4 && n < maxIterations) {
+    // Calculate the next value of z using the formula z = z^2 + c
+    var temp = z.real * z.real - z.imag * z.imag + c.real;
+    z.imag = 2 * z.real * z.imag + c.imag;
+    z.real = temp;
+    // Increment the iteration counter
+    n++;
+  }
+  // Return a color based on the number of iterations
+  // You can change this to create different color schemes
+  var r = Math.floor(n * 255 / maxIterations);
+  var g = Math.floor((maxIterations - n) * 255 / maxIterations);
+  var b = Math.floor((n * n) % 255);
+  return [r, g, b];
+}
+
+// Define a function to draw the Mandelbrot set on the canvas
+function drawMandelbrot() {
+  // Loop through every pixel on the canvas
+  for (var x = 0; x < width; x++) {
+    for (var y = 0; y < height; y++) {
+      // Get the color of the pixel based on the Mandelbrot algorithm
+      var color = mandelbrotColor(x, y);
+      // Set the pixel color in the image data object
+      var index = (x + y * width) * 4;
+      imageData.data[index] = color[0]; // red
+      imageData.data[index + 1] = color[1]; // green
+      imageData.data[index + 2] = color[2]; // blue
+      imageData.data[index + 3] = 255; // alpha
+    }
+  }
+  // Put the image data on the canvas
+  ctx.putImageData(imageData, 0, 0);
+}
+
+// Define a function to handle mouse wheel events
+function handleWheel(event) {
+  // Get the mouse position relative to the canvas
+  var rect = canvas.getBoundingClientRect();
+  var mouseX = event.clientX - rect.left;
+  var mouseY = event.clientY - rect.top;
+  // Get the complex number corresponding to the mouse position
+  var c = pixelToComplex(mouseX, mouseY);
+  // Adjust the zoom level based on the wheel direction
+  if (event.deltaY < 0) {
+    // Zoom in
+    zoom *= 1.1;
+  } else {
+    // Zoom out
+    zoom /= 1.1;
+  }
+  // Center the canvas on the complex number
+  var offsetX = width / 2 - c.real * zoom;
+  var offsetY = height / 2 - c.imag * zoom;
+  ctx.translate(offsetX, offsetY);
+  // Draw the Mandelbrot set with the new zoom level
+  drawMandelbrot();
+  // Prevent the default behavior of the wheel event
+  event.preventDefault();
+}
+
+// Add an event listener for the mouse wheel on the canvas
+canvas.addEventListener("wheel", handleWheel);
+
+// Draw the Mandelbrot set for the first time
+drawMandelbrot();
+</script>
+</head>
+<body>
+<canvas id="canvas" width="800" height="600"></canvas>
+</body>
+</html>
