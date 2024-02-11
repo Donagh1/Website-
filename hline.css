@@ -1,0 +1,8 @@
+.hline { width:100%; height:10px; background: #404 }
+hr {
+  border: 0;
+  width: 100%;
+  color: #123455; /* Set the line color to blue */
+  background-color: #123455; /* Also set the background color to blue */
+  height: 9px; /* Adjust the height as needed */
+}

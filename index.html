@@ -3,6 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
+ <style>
+.content {
+  max-width: 500px;
+  margin: auto;
+}
+</style>
+<body>
+
+<div class="content">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 <style>
@@ -88,17 +97,51 @@ function myFunction() {
 }
 </script>    
 
-    <title>donagh Murphy homepage</title>
+    
 </head>
 <body bgcolor="#e7e7e7">
+    
 <div class="bio-page">
-  <img src="theimage.jpg" alt="image" width="300" height="300">
+  <meta content="text/html; charset=iso-8859-2" http-equiv="Content-Type">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+.mySlides {display:none;}
+</style>
+</head>
+<body>
+
+<div class="w3-content w3-section" style="max-width:500px">
+  <img class="mySlides" src="theimage.jpg" style="width:100%">
+  <img class="mySlides" src="theimage1.jpg" style="width:100%">
+  <img class="mySlides" src="theimage2.jpg" style="width:100%">
   
+</div>
+<title>donagh Murphy homepage</title>
+<script>
+var myIndex = 0;
+carousel();
+
+function carousel() {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  myIndex++;
+  if (myIndex > x.length) {myIndex = 1}    
+  x[myIndex-1].style.display = "block";  
+  setTimeout(carousel, 2000); // Change image every 2 seconds
+}
+</script>
 
 
   
-  <h1>Donagh Murphy </h1>
-
+  <h1 style="background-color:DodgerBlue;">Donagh Murphy </h1>
+  
+<div class="block_1"></div>
+<hr class="hline" style="background: blue;" />
+<p style="color: #e7e7e7"> ,</p>
+    <p style="color: #e7e7e7"> ,</p>
   <p>Hi, I'm Donagh Murphy I am the owner of Donagh co who are registered Xbox developers.</p>
 
  
@@ -115,70 +158,101 @@ function myFunction() {
 <p style="font-size: 20px; color:#000000;">
 <a href="Mandelbrot.html">Mandelbrot set </a>
 <p> 
+  
+        
+      <h2>My Projects</h2>
    
-   <h2>My Projects</h2>
-    <p style="font-size: 20px; color:#000000;">
-<a href="wii.html">wii portable</a>
-  <link rel="stylesheet" href="./style.css">
 
+<style>
+table, th, td {
+  border:1px solid black;
+}
+</style>
+<body>
+    <table style="width:100%">
+  <tr>
+    <th>planned</th>
+    <th>Completed</th> 
+  </tr>
+  <tr>
+    <td>wii portable</td>
+    <td>underway</td>
+    
+  </tr>
+  <tr>
+    <td>server</td>
+    <td>not yet</td>
+    
+  </tr>
+  <tr>
+    <td>speaker</td>
+    <td>underway</td>
+   
+  </tr>
+</table>
 </head>
+
 <body>
 <!-- partial:index.partial.html -->
 <head>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:700'><link rel="stylesheet" href="stye.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="share">
+  <span>Share</span>
+  <nav>
+    <a href="https://x.com"><i class="fa fa-twitter"></i></a>
+    <a href="https://Facebook.com"><i class="fa fa-facebook"></i></a>
+    <a href="#"><i class="fa fa-camera-retro"></i></a>
+    <a href="https://github.com/Donagh1"><i class="fa fa-github"></i></a>
+  </nav>
+</div>
+<!-- partial -->
+  <script  src="./scripts.js"></script>
+   <i class="fa fa-car fa-1x"></i>
+  <i class="fa fa-car fa-2x"></i>
+<i class="fa fa-car fa-4x"></i>
+<i class="fa fa-car fa-5x"></i>
+<i class="fa fa-car fa-4x"></i>
+<i class="fa fa-car fa-2x"></i>
+<i class="fa fa-car fa-1x"></i>
 </head>
 
-<body>
-  
-  <div class ="frame">
-    <a href="facebook.com" class="btn">
- <i class="fab fa-facebook-f" style="color: #3b5998;"></i>
-</a>
-    <a href=twitter.com" class="btn">
-  <i class="fab fa-twitter" style="color: #00acee;"></i>
-</a>
-    <a href="#" class="btn">
- <i class="fab fa-dribbble" style="color: #ea4c89;"></i>
-</a>
-    <a href="linkedin.com" class="btn">
- <i class="fab fa-linkedin-in" style="color:#0e76a8;"></i>
-</a>
-    <a href="#" class="btn">
- <i class="fab fa-get-pocket" style="color:#ee4056;"></i>
-</a>
-    <a href="#" class="btn">
- <i class="far fa-envelope"></i>
-</a>
-</div>
-</body>
-</div>
+ 
 <select name="clr" onchange="document.bgColor=this.options[this.selectedIndex].value" size="1">
     <br>
     <option value="black">black
-        <option value="orange">orange
-            <option value="flamingred">fuschia
-                <option value="lightyellow">light yellow
-                    <option value="green">green
-                        <option value="cyan">cyan
-                            <option value="yellow">yellow
-                                <option value="red">red
-                                    <option value="white">white</option>
-                                    <option value="#e7e7e7">gray</option>
+     <option value="orange">orange
+        <option value="flamingred">fuschia
+         <option value="lightyellow">light yellow
+          <option value="green">green
+           <option value="cyan">cyan
+            <option value="yellow">yellow
+             <option value="red">red
+             <option value="white">white</option>
+             <option value="#e7e7e7">gray</option>
 </select>&nbsp;&nbsp;Background Color
 
 <br>
 <select name="clr" onchange="document.fgColor=this.options[this.selectedIndex].value" size="1">
     <br>
-    <option value="black">black
-        <option value="orange">orange
-            <option value="flamingred">fuschia
-                <option value="lightyellow">light yellow
-                    <option value="cyan">cyan
-                        <option value="yellow">yellow
-                            <option value="red">red
-                                <option value="white">white</option>
+  <option value="black">black
+     <option value="orange">orange
+       <option value="flamingred">fuschia
+        <option value="lightyellow">light yellow
+     <option value="cyan">cyan
+         <option value="yellow">yellow
+                 <option value="red">red
+          <option value="white">white</option>
 </select>&nbsp;&nbsp;Text Color
 
+</div>
 
+</body
 </body>
 </html>
